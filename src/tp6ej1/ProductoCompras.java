@@ -242,13 +242,12 @@ public class ProductoCompras extends javax.swing.JFrame {
         return;
     }
     
-    // Crear un formateador de números para moneda en formato español (miles con puntos y decimales con coma)
-    NumberFormat formatMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "AR")); // Español de Argentina (puedes usar otros países como "es", "ES" para España)
+    // Formato argentino
+    NumberFormat formatMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
 
-    // Formatear el precio con el formato de moneda
+    // Cambio formato de moneda
     String precioConFormato = formatMoneda.format(precio);
 
-    // Añadir el producto a la tabla con el precio formateado
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     model.addRow(new Object[]{nombreProducto, categoria, precioConFormato});
 
