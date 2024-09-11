@@ -15,6 +15,9 @@ public class TP6EJ1 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        ProductoCompras comprar = new ProductoCompras();
+        comprar.setVisible(true);
+        comprar.setLocationRelativeTo(null);
     }
     
 }
