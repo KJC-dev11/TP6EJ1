@@ -4,6 +4,11 @@
  */
 package tp6ej1;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MOON
@@ -46,6 +51,7 @@ public class ProductoCompras extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(153, 153, 153));
 
         jLabel1.setBackground(new java.awt.Color(102, 102, 102));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\MOON\\Desktop\\png-clipart-computer-icons-box-graphics-product-box-miscellaneous-blue.png")); // NOI18N
         jLabel1.setText("GESTION DE PRODUCTOS");
@@ -59,10 +65,33 @@ public class ProductoCompras extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Precio ($) :");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Electronica", "Ropa", "Hogar", "Alimentos", "Limpieza" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\MOON\\Desktop\\11012566.png")); // NOI18N
         jButton1.setText("Agregar");
+        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -80,7 +109,7 @@ public class ProductoCompras extends javax.swing.JFrame {
                     .addComponent(jTextField1)
                     .addComponent(jTextField2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1)
                 .addGap(32, 32, 32))
         );
         jPanel2Layout.setVerticalGroup(
@@ -177,6 +206,58 @@ public class ProductoCompras extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String nombreProducto = jTextField1.getText().trim();
+    String precioTexto = jTextField2.getText().trim();
+    String categoria = (String) jComboBox1.getSelectedItem();
+
+    if (nombreProducto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El campo 'Nombre' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    double precio;
+    try {
+        precio = Double.parseDouble(precioTexto);
+        if (precio <= 0) {
+            JOptionPane.showMessageDialog(this, "El precio debe ser un número mayor a cero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El precio debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // Crear un formateador de números para moneda en formato español (miles con puntos y decimales con coma)
+    NumberFormat formatMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "AR")); // Español de Argentina (puedes usar otros países como "es", "ES" para España)
+
+    // Formatear el precio con el formato de moneda
+    String precioConFormato = formatMoneda.format(precio);
+
+    // Añadir el producto a la tabla con el precio formateado
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    model.addRow(new Object[]{nombreProducto, categoria, precioConFormato});
+
+    // Limpiar los campos de texto
+    jTextField1.setText("");
+    jTextField2.setText("");
+
+    JOptionPane.showMessageDialog(this, "Producto agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
